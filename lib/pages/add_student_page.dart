@@ -1,3 +1,4 @@
+import 'package:first/db/database_helper.dart';
 import 'package:first/models/student.dart';
 import 'package:first/pages/student_list_page.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +98,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
 
             SizedBox(height: 20,),
 
-            ElevatedButton(onPressed:() {
+            ElevatedButton(onPressed:() async {
               String name = nameC.text.trim();
               String cnic = cnicC.text.trim();
               String course = courseC.text.trim();
@@ -135,7 +136,15 @@ class _AddStudentPageState extends State<AddStudentPage> {
 
               // Send this student to DB and insert in Table
 
+              DatabaseHelper dbHelper = DatabaseHelper.instance;
+              int result = await dbHelper.saveStudent(student);
 
+              if( result > 0 ){
+                Fluttertoast.showToast(msg: 'Saved');
+              }else{
+                Fluttertoast.showToast(msg: 'Failed');
+
+              }
 
             },style: ElevatedButton.styleFrom(
               backgroundColor: Colors.cyanAccent,
