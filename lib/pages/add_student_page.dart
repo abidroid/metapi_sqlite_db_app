@@ -1,3 +1,4 @@
+import 'package:first/models/student.dart';
 import 'package:first/pages/student_list_page.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,13 @@ class AddStudentPage extends StatefulWidget {
 }
 
 class _AddStudentPageState extends State<AddStudentPage> {
+
+  var nameC = TextEditingController();
+  var cnicC = TextEditingController();
+  var courseC = TextEditingController();
+  var lastQC = TextEditingController();
+  var mobileC = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +30,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
+                controller: nameC,
                 decoration: InputDecoration(
                   labelText: "Enter your name",
                   border: OutlineInputBorder(),
@@ -34,6 +43,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
+                controller: cnicC,
                 keyboardType: .number,
                 decoration: InputDecoration(
                   labelText: "Enter your CNIC",
@@ -47,6 +57,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
+                controller: lastQC,
                 decoration: InputDecoration(
                   labelText: "Enter your Qualification",
                   border: OutlineInputBorder(),
@@ -59,6 +70,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
+                controller: courseC,
                 decoration: InputDecoration(
                   labelText: "Enter your course",
                   border: OutlineInputBorder(),
@@ -71,6 +83,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
+                controller: mobileC,
                 keyboardType: .phone,
                 decoration: InputDecoration(
                   labelText: "Enter your Mobile",
@@ -83,9 +96,45 @@ class _AddStudentPageState extends State<AddStudentPage> {
 
             SizedBox(height: 20,),
 
-            ElevatedButton(onPressed:() {},style: ElevatedButton.styleFrom(
+            ElevatedButton(onPressed:() {
+              String name = nameC.text.trim();
+              String cnic = cnicC.text.trim();
+              String course = courseC.text.trim();
+              String lastQ = lastQC.text.trim();
+              String mobile = mobileC.text.trim();
+
+              // Validations
+              // Front End
+              if( name.isEmpty){
+                // show Toast
+                return;
+              }
+
+              if( cnic.isEmpty){
+
+                return;
+              }
+
+              if( course.isEmpty ){
+                return;
+              }
+
+              if( lastQ.isEmpty){
+                return;
+              }
+
+
+              Student student = Student(cnic: cnic, name: name, course: course, lastQualification: lastQ, mobile: mobile);
+
+              // Send this student to DB and insert in Table
+
+
+
+            },style: ElevatedButton.styleFrom(
               backgroundColor: Colors.cyanAccent,
             ), child: Text("Save")),
+
+
             SizedBox(height: 20,),
             ElevatedButton(onPressed: (){
               Navigator.of(context).push(MaterialPageRoute(builder: (context){
