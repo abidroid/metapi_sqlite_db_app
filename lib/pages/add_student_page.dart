@@ -1,6 +1,7 @@
 import 'package:first/models/student.dart';
 import 'package:first/pages/student_list_page.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AddStudentPage extends StatefulWidget {
   const AddStudentPage({super.key});
@@ -107,19 +108,25 @@ class _AddStudentPageState extends State<AddStudentPage> {
               // Front End
               if( name.isEmpty){
                 // show Toast
+                Fluttertoast.showToast(msg: 'Please provide name');
                 return;
               }
 
               if( cnic.isEmpty){
+                Fluttertoast.showToast(msg: 'Please provide CNIC');
 
                 return;
               }
 
               if( course.isEmpty ){
+                Fluttertoast.showToast(msg: 'Please provide course');
+
                 return;
               }
 
               if( lastQ.isEmpty){
+                Fluttertoast.showToast(msg: 'Please provide Last Qualification');
+
                 return;
               }
 
