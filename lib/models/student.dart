@@ -18,6 +18,18 @@ class Student {
 
   // fromMap
 
-  // toMap
 
+  // toMap
+  Map<String, String?> toMap() {
+
+    Map<String, String?> stdMap = {
+      'cnic': cnic,
+      'name': name,
+      'course': course,
+      'lastQualification': lastQualification,
+      'mobile': mobile,
+    };
+
+    return stdMap;
+  }
 }

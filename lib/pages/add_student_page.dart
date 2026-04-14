@@ -1,7 +1,9 @@
 import 'package:first/db/database_helper.dart';
 import 'package:first/models/student.dart';
 import 'package:first/pages/student_list_page.dart';
+import 'package:first/utils/formatters/cnic_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AddStudentPage extends StatefulWidget {
@@ -45,8 +47,17 @@ class _AddStudentPageState extends State<AddStudentPage> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
+
+
+
                 controller: cnicC,
-                keyboardType: .number,
+
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly, // allow digits only
+                  LengthLimitingTextInputFormatter(13),   // 5 + 7 + 1 + 2 dashes = 15
+                  CnicFormatter(),
+                ],
                 decoration: InputDecoration(
                   labelText: "Enter your CNIC",
                   border: OutlineInputBorder(),
@@ -119,6 +130,12 @@ class _AddStudentPageState extends State<AddStudentPage> {
                 return;
               }
 
+              if( cnic.length != 15){
+                Fluttertoast.showToast(msg: 'Invalid CNIC number');
+                return;
+              }
+
+
               if( course.isEmpty ){
                 Fluttertoast.showToast(msg: 'Please provide course');
 
@@ -134,10 +151,17 @@ class _AddStudentPageState extends State<AddStudentPage> {
 
               Student student = Student(cnic: cnic, name: name, course: course, lastQualification: lastQ, mobile: mobile);
 
+              Map<String, String?> stdMap = {
+                'cnic': '93898398383398',
+                'name': 'Test',
+                'course': 'Mobile AD',
+                'lastQualification': 'FA',
+                'mobile': null,
+              };
               // Send this student to DB and insert in Table
 
               DatabaseHelper dbHelper = DatabaseHelper.instance;
-              int result = await dbHelper.saveStudent(student);
+              int result = await dbHelper.saveStudentToDB(student);
 
               if( result > 0 ){
                 Fluttertoast.showToast(msg: 'Saved');

@@ -57,16 +57,19 @@ class DatabaseHelper {
 
   // Save Student
   // method
-  Future<int> saveStudent( Student student ) async {
+  Future<int> saveStudentToDB( Student student ) async {
 
     Database database = await this.database;
 
-    int result = await  database.rawInsert('''
-      INSERT INTO tbl_student ( cnic, name, course, lastQualification, mobile)
-      VALUES ( ?,?,?,?,? )
-    ''', [student.cnic, student.name, student.course, student.lastQualification, student.mobile] );
+    // int result = await  database.rawInsert('''
+    //   INSERT INTO tbl_student ( cnic, name, course, lastQualification, mobile)
+    //   VALUES ( ?,?,?,?,? )
+    // ''', [student.cnic, student.name, student.course, student.lastQualification, student.mobile] );
 
-    return result;
+
+
+    int result2 = await database.insert('tbl_student', student.toMap());
+    return result2;
   }
 
 }
