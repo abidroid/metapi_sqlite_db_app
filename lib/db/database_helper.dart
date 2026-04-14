@@ -72,4 +72,12 @@ class DatabaseHelper {
     return result2;
   }
 
+   Future<List<Map<String, dynamic>>> getAllStudents() async {
+
+    // get all students from Database table
+     Database database = await this.database;
+     //await Future.delayed(Duration(seconds: 3));
+
+    return await database.rawQuery('SELECT * from tbl_student');
+  }
 }

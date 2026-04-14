@@ -1,4 +1,5 @@
 
+import 'package:first/db/database_helper.dart';
 import 'package:flutter/material.dart';
 
 class StudentListPage extends StatefulWidget {
@@ -15,7 +16,16 @@ class _StudentListPageState extends State<StudentListPage> {
       appBar: AppBar(
         title: const Text('Students List'),
       ),
-      body: Placeholder(),
+      body: FutureBuilder<List<Map<String, dynamic>>>
+        (future: DatabaseHelper.instance.getAllStudents(),
+          builder: (context, snapshot){
+        if( snapshot.hasData){
+
+          return Center(child: Text(snapshot.data!.length.toString()));
+        }else{
+          return Center(child: CircularProgressIndicator());
+        }
+      }),
     );
   }
 }
