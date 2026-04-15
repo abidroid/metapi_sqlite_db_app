@@ -165,6 +165,9 @@ class _AddStudentPageState extends State<AddStudentPage> {
 
               if( result > 0 ){
                 Fluttertoast.showToast(msg: 'Saved');
+
+                // Todo: clear all textfields
+                // Todo: Navigate to student list page
               }else{
                 Fluttertoast.showToast(msg: 'Failed');
 

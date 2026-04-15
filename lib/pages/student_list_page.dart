@@ -1,5 +1,6 @@
 
 import 'package:first/db/database_helper.dart';
+import 'package:first/pages/update_student_page.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -21,12 +22,18 @@ class _StudentListPageState extends State<StudentListPage> {
         (future: DatabaseHelper.instance.getAllStudents(),
           builder: (context, snapshot){
 
+
+
+
         if( snapshot.hasData){
          // return Center(child: Text(snapshot.data!.length.toString()));
 
 
           List<Map<String, dynamic>> students = snapshot.data!;
 
+          if( students.isEmpty){
+            return Center(child: Text('No Records Yet'),);
+          }
 
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -106,7 +113,12 @@ class _StudentListPageState extends State<StudentListPage> {
                                       foregroundColor: Colors.white
                                   ),
 
-                                  onPressed: (){},
+                                  onPressed: (){
+
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                                      return UpdateStudentPage(student: student);
+                                    }));
+                                  },
                                   label: Text('Update'),
                                   icon: Icon(Icons.edit),
                                 ),

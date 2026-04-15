@@ -89,4 +89,19 @@ class DatabaseHelper {
 
     return await database.rawDelete('DELETE FROM tbl_student where cnic=?', [cnic]);
   }
+
+
+  // Save Student
+  // method
+  Future<int> updateStudentToDB( Student student ) async {
+
+    Database database = await this.database;
+
+    int result = await  database.rawUpdate('''
+      UPDATE tbl_student set 
+      name=?, lastQualification=?, course=?, mobile=? where cnic=?
+    ''', [student.name, student.lastQualification, student.course, student.mobile, student.cnic] );
+
+    return result;
+  }
 }
