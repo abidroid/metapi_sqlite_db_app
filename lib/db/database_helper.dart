@@ -72,12 +72,21 @@ class DatabaseHelper {
     return result2;
   }
 
+
    Future<List<Map<String, dynamic>>> getAllStudents() async {
 
     // get all students from Database table
      Database database = await this.database;
      //await Future.delayed(Duration(seconds: 3));
 
-    return await database.rawQuery('SELECT * from tbl_student');
+    //return await database.rawQuery('SELECT * from tbl_student');
+     //await Future.delayed(Duration(seconds: 2));
+    return await database.query('tbl_student');
+  }
+
+  Future<int> deleteStudent( String cnic) async {
+    Database database = await this.database;
+
+    return await database.rawDelete('DELETE FROM tbl_student where cnic=?', [cnic]);
   }
 }

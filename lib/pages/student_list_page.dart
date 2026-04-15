@@ -1,6 +1,7 @@
 
 import 'package:first/db/database_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class StudentListPage extends StatefulWidget {
   const StudentListPage({super.key});
@@ -19,6 +20,7 @@ class _StudentListPageState extends State<StudentListPage> {
       body: FutureBuilder<List<Map<String, dynamic>>>
         (future: DatabaseHelper.instance.getAllStudents(),
           builder: (context, snapshot){
+
         if( snapshot.hasData){
          // return Center(child: Text(snapshot.data!.length.toString()));
 
@@ -46,6 +48,7 @@ class _StudentListPageState extends State<StudentListPage> {
                           Text('Name: ${student['name']}'),
                           Text('Course: ${student['course']}'),
                           Text('Qual: ${student['lastQualification']}'),
+                          Text('Mob: ${student['mobile'] ?? "NA"}'),
 
                           Row(
                             spacing: 16,
@@ -57,7 +60,40 @@ class _StudentListPageState extends State<StudentListPage> {
                                     foregroundColor: Colors.white
                                   ),
 
-                                  onPressed: (){},
+                                  onPressed: (){
+
+                                    // show a confirm dialog
+                                    // if yes, then delete
+
+                                    showDialog(context: context, builder: (context){
+                                      return AlertDialog(
+                                        title: Text('Confirmation'),
+                                        content: Text('Are you sure to delete ${student["name"]}'),
+                                        actions: [
+                                          TextButton(onPressed: (){
+                                            Navigator.of(context).pop();
+
+                                          }, child: Text('No')),
+                                          TextButton(onPressed: () async {
+                                            Navigator.of(context).pop();
+
+                                            int deleted = await DatabaseHelper.instance.deleteStudent(student['cnic']);
+                                            if( deleted > 0 ){
+                                              setState(() {
+
+                                              });
+                                              Fluttertoast.showToast(msg: 'Deleted');
+                                            }else{
+                                              Fluttertoast.showToast(msg: 'Failed');
+
+                                            }
+
+                                          }, child: Text('Yes')),
+                                        ],
+                                      );
+
+                                    });
+                                  },
                                     label: Text('Delete'),
                                     icon: Icon(Icons.delete,),
                                 ),
