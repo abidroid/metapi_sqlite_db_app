@@ -130,11 +130,8 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                 return;
               }
 
-
-
               if( course.isEmpty ){
                 Fluttertoast.showToast(msg: 'Please provide course');
-
                 return;
               }
 
@@ -151,7 +148,7 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
 
               if( updated > 0 ){
                 Fluttertoast.showToast(msg: 'Updated');
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(true);
               }else{
                 Fluttertoast.showToast(msg: 'Failed');
 

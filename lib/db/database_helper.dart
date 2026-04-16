@@ -81,7 +81,7 @@ class DatabaseHelper {
 
     //return await database.rawQuery('SELECT * from tbl_student');
      //await Future.delayed(Duration(seconds: 2));
-    return await database.query('tbl_student');
+    return await database.query('tbl_student', orderBy: "name DESC");
   }
 
   Future<int> deleteStudent( String cnic) async {
@@ -97,10 +97,17 @@ class DatabaseHelper {
 
     Database database = await this.database;
 
-    int result = await  database.rawUpdate('''
-      UPDATE tbl_student set 
-      name=?, lastQualification=?, course=?, mobile=? where cnic=?
-    ''', [student.name, student.lastQualification, student.course, student.mobile, student.cnic] );
+    // int result = await  database.rawUpdate('''
+    //   UPDATE tbl_student set
+    //   name=?, lastQualification=?, course=?, mobile=? where cnic=?
+    // ''', [student.name, student.lastQualification, student.course, student.mobile, student.cnic] );
+
+
+    Map<String, dynamic> studentMap = student.toMap();
+
+    studentMap.remove('cnic');
+
+    int result = await database.update('tbl_student', studentMap, where: 'cnic=?', whereArgs: [student.cnic]);
 
     return result;
   }

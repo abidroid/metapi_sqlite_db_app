@@ -113,11 +113,19 @@ class _StudentListPageState extends State<StudentListPage> {
                                       foregroundColor: Colors.white
                                   ),
 
-                                  onPressed: (){
+                                  onPressed: () async {
 
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                                   bool? result = await Navigator.of(context).push(MaterialPageRoute(builder: (context){
                                       return UpdateStudentPage(student: student);
                                     }));
+
+                                   if( result != null && result == true ){
+                                    setState(() {
+
+                                    });
+                                   }else{
+                                     Fluttertoast.showToast(msg: 'Not updated');
+                                   }
                                   },
                                   label: Text('Update'),
                                   icon: Icon(Icons.edit),

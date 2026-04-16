@@ -167,7 +167,18 @@ class _AddStudentPageState extends State<AddStudentPage> {
                 Fluttertoast.showToast(msg: 'Saved');
 
                 // Todo: clear all textfields
+                nameC.clear();
+                cnicC.clear();
+                lastQC.clear();
+                courseC.clear();
+                mobileC.clear();
+
                 // Todo: Navigate to student list page
+                Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                  return StudentListPage();
+                }));
+
+
               }else{
                 Fluttertoast.showToast(msg: 'Failed');
 
